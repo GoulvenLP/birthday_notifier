@@ -1,0 +1,196 @@
+# README
+Auteur: Goulven Le Pennec<br/>
+11/2024
+
+### Guide d'utilisation de Candle finder
+Bienvenue dans le guide d'installation de **Candle finder**!
+
+- [README](#readme)
+    - [Guide d'utilisation de Candle finder](#guide-dutilisation-de-candle-finder)
+    - [1 - Descriptif](#1---descriptif)
+    - [2 - Contenu du package](#2---contenu-du-package)
+    - [3 - Paramétrage](#3---paramétrage)
+      - [3.1 - Base de donneés](#31---base-de-donneés)
+      - [3.2 - Exécutables](#32---exécutables)
+    - [4 - Lancement](#4---lancement)
+      - [4.1 Prénom](#41-prénom)
+      - [4.2 - Nom](#42---nom)
+      - [4.3 - Date de naissance](#43---date-de-naissance)
+    - [5 - Ajout](#5---ajout)
+    - [6 - Suppression](#6---suppression)
+    - [7 - Paramétrer l'application avec crontab](#7---paramétrer-lapplication-avec-crontab)
+      - [7.1 - Variable DISPLAY](#71---variable-display)
+      - [7.2 - Variable XAUTHORITY](#72---variable-xauthority)
+      - [7.3 - dbus-launch](#73---dbus-launch)
+      - [7.4 - Paramétrer le lancement de l'application avec crontab](#74---paramétrer-le-lancement-de-lapplication-avec-crontab)
+
+
+
+
+### 1 - Descriptif
+**Candle finder** est une application de référencement et de signalement d'anniversaires, un grand plus pour ne plus passer à côté des bougies!
+
+
+### 2 - Contenu du package
+Le package contient 5 fichiers:
+- launcher
+- main
+- ajoute.sh
+- calc.sh
+- cherche.sh
+
+### 3 - Paramétrage
+Dans le script **main**, remplacer la valeur de la variable **path** ligne 5 par le chemin absolu où se trouvent les scripts, puis enregistrer.<br/>
+ex:<br/>
+```bash
+path="/home/toto/Desktop/candleFinder"
+```
+
+#### 3.1 - Base de donneés
+Créer dans le répertoire où se trouvent les quatre fichiers, un fichier nommé `dates.txt`.
+
+#### 3.2 - Exécutables
+Modifier le statut des exécutables: ouvrir un terminal puis entrer les commandes successives suivantes pour rendre les scripts exécutables.
+```bash
+chmod u+x ajoute
+chmod u+x calcAge
+chmod u+x cherche
+chmod u+x main
+```
+
+### 4 - Lancement
+- Ouvrir un terminal
+- Exécuter le fichier *main*:
+```bash
+./main
+```
+Une IHM se lance avec des informations:
+- Présence d'un anniversaire à fêter ce jour ou non
+- Une liste de choix à réaliser regroupée sous le titre *Chercher*
+
+Si un/des anniversaire(s) survient/nent le jour en question, le nom de la/des personne(s) concernée(s) est/sont affichée(s) à l'écran ainsi que son/leur âge. Sinon un message signale l'absence d'anniversaire.
+
+**Tous les choix de sélection dans le menu se font en entrant le numéro de l'index associé à un titre**
+
+Par exemple pour sélectionner une recherche par prénom, il faudra entrer 1 dans le terminal puis valider avec la touche *\<Entrée>*.
+
+Concernant la liste de choix possibles:
+
+#### 4.1 Prénom
+Permet de rechercher quelqu'un dans la base de données par son prénom. Les **recherches** ne sont pas sensibles à la casse mais sont **sensibles aux caractères spéciaux** (tels é, è, ê, ô, ...). Par exemple, une recherche de "Beatrice" se soldera par un échec si cette personne est enregistrée sous "B**é**atrice".
+
+#### 4.2 - Nom
+Permet de rechercher un individu par son nom de famille. Les critères sont les mêmes que ceux du prénom concernant la casse et les caractères spéciaux.
+
+#### 4.3 - Date de naissance
+Permet de rechercher un individu par sa date de naissance
+
+Si au moins un individu est trouvé lors d'une recherche, il sera affiché à l'écran sous le format: <br/>
+<Prénom> \<Nom>\<Date de naissance>
+
+Si plusieurs individus correspondent au paramètre de recherche, ils seront affichés au nombre d'une personne par ligne.
+
+### 5 - Ajout
+Il est possible d'ajouter des individus à la base de données en suivant la procédure décrite.
+1. Entrer le nom de famille de la personne à ajouter
+2. Entrer le prénom de la personne à ajouter
+3. Entrer sa date de naissance
+
+Si l'ajout vous paraît trop fastidieux sous cet angle, il est également possible de remplir la base de données manuellement.
+Veiller scrupuleusement à respecter le format décrit ci-dessous:
+- Une personne par ligne
+- format <Prénom> \<Nom>\<Date de naissance>
+- Un seul espace entre les 3 paramètres décrits ci-dessus
+- S'il y a des espaces au sein d'un nom ou bien d'un prénom, compléter ces espaces par le caractère '_'.
+- Le format de la date de naissance doit être jj/mm/aaaa.
+- Aucun champ ne doit être vide
+
+**ex:**<br/>
+```
+Jean DE_LA_FONTAINE 8/07/1621
+```
+### 6 - Suppression
+
+Il n'existe pas à ce jour de fonction de suppression de personne de la base de données. Pour ce faire, ouvrir le fichier *dates.txt* et supprimer manuellement l'intégralité de la ligne où se trouve l'individu.
+- Ne pas laisser de lignes vides au sein de la base de données
+- Si la dernière ligne est effacée, s'assurer de l'existence d'un renvoi de ligne après la dernière personne référencée.
+
+
+### 7 - Paramétrer l'application avec crontab
+Pour une expérience-utilisateur améliorée il est possible de lancer **Candle finder** quotidiennement et ce de façon automatisée!
+
+3 prérequis à ceci:
+- Vérifier la variable DISPLAY
+- Vérifier la variable XAUTHORITY
+- S'assurer que dbus-launch est bien installé
+
+#### 7.1 - Variable DISPLAY
+la commande
+```bash
+echo $DISPLAY
+```
+Devrait renvoyer `:0`.
+Si c'est le cas, première étape validée!
+
+#### 7.2 - Variable XAUTHORITY
+Même vérification que précédemment
+```bash
+echo $XAUTHORITY
+```
+Si un chemin s'affiche, le **copier** dans le fichier **launcher** pour remplacer la destination assignée à XAUTHORITY.
+
+#### 7.3 - dbus-launch
+Entrer la commande suivante dans le terminal:
+```bash
+which dbus-launch
+```
+Cette commande permet de vérifier si dbus-x11 est installé sur la machine.
+
+Si cette commande ne prodigue aucun résultat, **installer** dbus-x11
+
+```bash
+sudo apt-get install dbus-x11
+```
+
+#### 7.4 - Paramétrer le lancement de l'application avec crontab
+Aller dans le répertoire des crontab:
+```bash 
+cd /etc/cron.d
+```
+
+Créer un fichier cron par exemple **candleFinder**
+
+```bash
+touch candleFinder
+```
+Récupérez votre nom d'utilisateur:
+```
+whoami
+```
+
+Copier ce contenu dans le fichier créé **candleFinder**:
+```
+# m h        user	command
+MINUTES HEURE * * * VOTRE_NOM_D_UTILISATEUR	CHEMIN_VERS_LE_FICHIER_LAUNCHER
+```
+- **MINUTES**: minutes auxquelles exécuter le script
+- **HEURE**: heure à laquelle exécuter le script
+- **NOM_D_UTILISATEUR**: le nom récupéré via la commande `whoami`
+- **CHEMIN_VERS_LE_FICHIER_LAUNCHER**: chemin absolu vers le launcher. Le plus simple pour le connaître est de se placer dans le répertoire où se situe **CandleFinder**, de lancer la commande `pwd` et d'y concaténer **launcher**. C'est le chemin à ajouter dans le fichier cron.
+
+Illustration:
+```
+# m h        user	command
+05 11 * * * toto	/home/toto/launcher
+```
+*Script cron qui lance l'application **CandleFinder** quotidiennement à 11h05*.
+
+nb: il est possible de paramétrer le cron différemment bien entendu, plus d'informations se trouvent sur le net à ce sujet!
+
+Une fois ceci paramétré, le script est prêt à être lancé quotidiennement!
+
+Ne pas hésiter à faire quelques tests en amont, car une erreur de chemin est vite arrivée ou bien des soucis de configuration peuvent obstruer le chemin le temps d'être résolus.
+
+Petit conseil d'usage: penser à paramétrer les rappels à une heure où la machine est allumée...
+
+À présent, impossible de manquer un anniversaire!

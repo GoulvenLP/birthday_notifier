@@ -1,0 +1,8 @@
+# !/bin/bash
+# wrapper for the crontab
+# launchs the main script
+
+export DISPLAY=:0
+export  XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.AEUSX2
+/usr/bin/gnome-terminal -- /bin/sh -c '/home/gou/Bureau/lab/anni/main; bash'
+

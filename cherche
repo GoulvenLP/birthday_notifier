@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#RECHERCHE SI UN NOM OU BIEN UN PRENOM SONT PRESENTS DANS LA LISTE 
+# $1: type de recherche: {selectPrenom, selectNom, selectAll}
+# $2: le paramètre à rechercher
+# $3: le chemin absolu où se trouve le fichier
+# format de la bdd : prenom nom ddn
+
+mode=${1}
+toSeek=${2}
+path=$3
+
+if [[ "${mode}" == "selectPrenom" ]]; then
+	grep -Ei "^${toSeek}" ${path}/dates.txt
+
+elif [[ "${mode}" == "selectNom" ]]; then
+	grep -Ei "^.+ ${toSeek}" ${path}/dates.txt
+
+elif [[ "${mode}" == "selectAll" ]]; then
+	grep -i "${toSeek}" ${path}/dates.txt
+fi
+
+exit

@@ -10,13 +10,23 @@ prenom=$1
 nom=$2
 ddn=$3
 path=$4
+destFile="${path}/dates.txt"
 
-if [[ $# -ne 3 ]]
-	then
+nbLinesBefore=$(wc -l ${destFile} | cut -d ' ' -f 1)
+
+if [[ $# -ne 4 ]]; then
 	exit 1
 else 
 	pers="${prenom} ${nom} ${ddn}"
 
-	echo ${pers} >> ${path}/dates.txt
-	exit 0
+	echo ${pers} >> ${destFile}
+
+	nbLinesAfter=$(wc -l ${destFile} | cut -d ' ' -f 1)
+	
+	# vérification que la ligne a bien été ajoutée dans la BDD
+	if [ "${nbLinesBefore}" != "${nbLinesAfter}" ]; then
+		exit 0 # success
+	else
+		exit 1 # failure
+	fi
 fi

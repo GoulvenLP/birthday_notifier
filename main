@@ -2,7 +2,7 @@
 	#cherche les anniversaires du jour + permet de trouver la DDN de qqn de la liste.
 	#permet également d'ajouter des personnes à la liste d'anniversaire
 
-path="/home/gou/Bureau/lab/anni"
+path=$(cat env)
 
 
 # Initialisation des couleurs
@@ -62,8 +62,7 @@ main() {
 			1)					#RECHERCHE PAR PRENOM
 			read -p "Entrer le prénom : " prenom
 			prenom=$(echo ${prenom} | tr ' ' '_')
-			if [[ `${path}/cherche selectPrenom ${prenom} ${path} |wc -l`>=1 ]]	#SI AU MOINS UN RESULTAT TROUVE
-			then
+			if [[ `${path}/cherche selectPrenom ${prenom} ${path} |wc -l`>=1 ]]; then	#SI AU MOINS UN RESULTAT TROUVE
 				msg "${CYAN}"
 				${path}/cherche selectPrenom $prenom ${path} | tr _ ' '
 				msg "${NOFORMAT}"
@@ -74,8 +73,7 @@ main() {
 			
 			2)				# RECHERCHE PAR NOM
 			read -p "Entrer le nom : " nom		# ecrire avec des '_' pour combler les espaces
-			if [[ `${path}/cherche selectNom ${nom} ${path} | wc -l`>=1 ]]
-			then
+			if [[ `${path}/cherche selectNom ${nom} ${path} | wc -l`>=1 ]]; then
 				msg "${CYAN}"
 				${path}/cherche selectNom $nom ${path} | tr _ ' '
 				msg "${NOFORMAT}"				
@@ -87,8 +85,7 @@ main() {
 			3)				# RECHERCHE PAR DDN
 			echo "Entrer la date de naissance au format 'jj/mm/aaaa' (ou jj/mm ou bien une fraction de ce format) : " 
 			read ddn
-			if [[ `${path}/cherche selectAll ${ddn} ${path} |wc -l`>=1 ]]
-			then
+			if [[ `${path}/cherche selectAll ${ddn} ${path} |wc -l`>=1 ]]; then
 				msg "${CYAN}"
 				${path}/cherche selectAll $ddn ${path} | tr _ ' '
 				msg "${NOFORMAT}"
@@ -101,28 +98,23 @@ main() {
 			echo "Entrer le nom de famille de la personne à ajouter : "
 			read nom1 nom2 nom3 nom4 nom5
 			
-				if [[ ! -z ${nom5} ]]
-				then
+				if [[ ! -z ${nom5} ]]; then
 					nom1="${nom1}_${nom2}_${nom3}_${nom4}_${nom5}"
-				elif [[ ! -z ${nom4} ]]
-				then
+				elif [[ ! -z ${nom4} ]]; then
 					nom1="${nom1}_${nom2}_${nom3}_${nom4}"
-				elif [[ ! -z ${nom3} ]]
-				then
+				elif [[ ! -z ${nom3} ]]; then
 					nom1="${nom1}_${nom2}_${nom3}"
-				elif [[ ! -z ${nom2} ]]
-				then
+				elif [[ ! -z ${nom2} ]]; then
 					nom1="${nom1}_${nom2}"		
 				else
 					nom1=${nom1}
 				fi
 			echo "Entrer le prénom de la personne à ajouter : "
 			read prenom
-			echo "Entrer la date de naissance de la personne à ajouter"
+			echo "Entrer la date de naissance de la personne à ajouter (format jj/mm/aaaa)"
 			read ddn
 			${path}/ajoute ${prenom} ${nom1} ${ddn} ${path}
-			if [[ $? -eq "0" ]] #succès de l'ajout
-			then
+			if [[ "$?" -eq "0" ]]; then #succès
 				msg "${GREEN}${prenom} ${nom1} ajouté avec succès!${NOFORMAT}"
 			else
 				msgAddFailed

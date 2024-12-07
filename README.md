@@ -1,6 +1,14 @@
 # README
+
+```
+  ___   __   __ _  ____  __    ____    ____  __  __ _  ____  ____  ____ 
+ / __) / _\ (  ( \(    \(  )  (  __)  (  __)(  )(  ( \(    \(  __)(  _ \
+( (__ /    \/    / ) D (/ (_/\ ) _)    ) _)  )( /    / ) D ( ) _)  )   / 
+ \___)\_/\_/\_)__)(____/\____/(____)  (__)  (__)\_)__)(____/(____)(__\_) 
+ ```
 Auteur: Goulven Le Pennec<br/>
-11/2024
+12/2024
+
 
 ### Guide d'utilisation de Candle finder
 Bienvenue dans le guide d'installation de **Candle finder**!
@@ -10,8 +18,6 @@ Bienvenue dans le guide d'installation de **Candle finder**!
     - [1 - Descriptif](#1---descriptif)
     - [2 - Contenu du package](#2---contenu-du-package)
     - [3 - Paramétrage](#3---paramétrage)
-      - [3.1 - Base de donneés](#31---base-de-donneés)
-      - [3.2 - Exécutables](#32---exécutables)
     - [4 - Lancement](#4---lancement)
       - [4.1 Prénom](#41-prénom)
       - [4.2 - Nom](#42---nom)
@@ -32,31 +38,27 @@ Bienvenue dans le guide d'installation de **Candle finder**!
 
 
 ### 2 - Contenu du package
-Le package contient 5 fichiers:
+Le package contient ces fichiers:
+- config
 - launcher
+- dailyCheck
 - main
-- ajoute.sh
-- calc.sh
-- cherche.sh
+- ajoute
+- calc
+- cherche
 
 ### 3 - Paramétrage
-Dans le script **main**, remplacer la valeur de la variable **path** ligne 5 par le chemin absolu où se trouvent les scripts, puis enregistrer.<br/>
-ex:<br/>
+- Se déplacer dans le répertoire.<br/>
+- Ouvrir un terminal.<br/>
+- Rendre exécutable le fichier `config`
 ```bash
-path="/home/toto/Desktop/candleFinder"
+chmod 777 config
 ```
-
-#### 3.1 - Base de donneés
-Créer dans le répertoire où se trouvent les quatre fichiers, un fichier nommé `dates.txt`.
-
-#### 3.2 - Exécutables
-Modifier le statut des exécutables: ouvrir un terminal puis entrer les commandes successives suivantes pour rendre les scripts exécutables.
-```bash
-chmod u+x ajoute
-chmod u+x calcAge
-chmod u+x cherche
-chmod u+x main
+Exécuter le script
 ```
+./config
+```
+Le script va paramétrer l'environnement de base et créer la base de données
 
 ### 4 - Lancement
 - Ouvrir un terminal
@@ -161,7 +163,7 @@ cd /etc/cron.d
 Créer un fichier cron par exemple **candleFinder**
 
 ```bash
-touch candleFinder
+sudo touch candleFinder
 ```
 Récupérez votre nom d'utilisateur:
 ```
@@ -176,12 +178,12 @@ MINUTES HEURE * * * VOTRE_NOM_D_UTILISATEUR	CHEMIN_VERS_LE_FICHIER_LAUNCHER
 - **MINUTES**: minutes auxquelles exécuter le script
 - **HEURE**: heure à laquelle exécuter le script
 - **NOM_D_UTILISATEUR**: le nom récupéré via la commande `whoami`
-- **CHEMIN_VERS_LE_FICHIER_LAUNCHER**: chemin absolu vers le launcher. Le plus simple pour le connaître est de se placer dans le répertoire où se situe **CandleFinder**, de lancer la commande `pwd` et d'y concaténer **launcher**. C'est le chemin à ajouter dans le fichier cron.
+- **CHEMIN_VERS_LE_FICHIER_dailyChecker**: chemin absolu vers le fichier dailyChecker. Copier-coller le chemin se trouvant dans le fichier **env** et y concatener `/dailyChecker`.
 
 Illustration:
 ```
 # m h        user	command
-05 11 * * * toto	/home/toto/launcher
+05 11 * * * toto	/home/toto/dailyChecker
 ```
 *Script cron qui lance l'application **CandleFinder** quotidiennement à 11h05*.
 

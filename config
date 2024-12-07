@@ -1,0 +1,25 @@
+# !/bin/bash
+
+# Configure les fichiers pour le répertoire
+
+# set executables
+files=(ajoute calcAge cherche dailyCheck launcher main)
+
+for file in ${files[@]}; do
+    chmod 777 ${file}
+done
+
+# set default path in the env file
+if [ ! -f "env" ]; then
+    touch env
+fi
+pwd > env
+
+
+# create database if it does not exist
+if [ ! -f "dates.txt" ]; then
+    touch dates.txt
+    echo "#prenom nom_nom jj/mm/aaaa > dates.txt"
+fi
+
+exit 0

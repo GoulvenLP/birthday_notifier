@@ -21,7 +21,12 @@ msg() {
 
 # Affiche le nom de l'application
 title() {
-	msg "${PURPLE}****\ CANDLE FINDER /**** ${NOFORMAT}"
+title() {
+	msg "${PURPLE}  ___   __   __ _  ____  __    ____    ____  __  __ _  ____  ____  ____  ${NOFORMAT}"
+	msg "${PURPLE} / __) / _\ (  ( \(    \(  )  (  __)  (  __)(  )(  ( \(    \(  __)(  _ \ ${NOFORMAT}"
+	msg "${PURPLE}( (__ /    \/    / ) D (/ (_/\ ) _)    ) _)  )( /    / ) D ( ) _)  )   / ${NOFORMAT}"
+	msg "${PURPLE} \___)\_/\_/\_)__)(____/\____/(____)  (__)  (__)\_)__)(____/(____)(__\_) ${NOFORMAT}"
+}
 }
 
 leave() {

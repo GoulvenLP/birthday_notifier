@@ -1,0 +1,75 @@
+#!/bin/bash
+	#cherche les anniversaires du jour + permet de trouver la DDN de qqn de la liste.
+	#permet également d'ajouter des personnes à la liste d'anniversaire
+
+path="/home/gou/Bureau/lab/anni"
+
+
+# Initialisation des couleurs
+setup_colors() {
+	if [[ -t 2 ]] && [[ -z "${NO_COLOR-}" ]] && [[ "${TERM-}" != "dumb" ]]; then
+		NOFORMAT='\033[0m' RED='\033[0;31m' GREEN='\033[0;32m' ORANGE='\033[0;33m' BLUE='\033[0;34m' PURPLE='\033[0;35m' CYAN='\033[0;36m' YELLOW='\033[1;33m'
+	else
+		NOFORMAT='' RED='' GREEN='' ORANGE='' BLUE='' PURPLE='' CYAN='' YELLOW=''
+	fi
+}
+
+# Méthode qui gère les affichages en couleur. à appeler au lieu de "echo"
+msg() {
+  echo >&2 -e "${1-}"
+}
+
+# Affiche le nom de l'application
+title() {
+	msg "${PURPLE}  ___   __   __ _  ____  __    ____    ____  __  __ _  ____  ____  ____  ${NOFORMAT}"
+	msg "${PURPLE} / __) / _\ (  ( \(    \(  )  (  __)  (  __)(  )(  ( \(    \(  __)(  _ \ ${NOFORMAT}"
+	msg "${PURPLE}( (__ /    \/    / ) D (/ (_/\ ) _)    ) _)  )( /    / ) D ( ) _)  )   / ${NOFORMAT}"
+	msg "${PURPLE} \___)\_/\_/\_)__)(____/\____/(____)  (__)  (__)\_)__)(____/(____)(__\_) ${NOFORMAT}"
+}
+
+leave() {
+	msg "${PURPLE}À bientôt!${NOFORMAT}"
+}
+
+# Affiche le jour en cours et cherche un anniversaire sur le jour en cours
+# Un message spécifie s'il y a ou non un anniversaire, et si oui donne les noms et âges des personnes concernées.
+currentDay() {
+	path=$1
+	devez=`date +%d/%m/%Y`	#récupération date du jour
+	deizHaMiz=`date +%d/%m`
+	echo $deiz
+
+	echo "Date : ${devez}"
+
+	${path}/cherche selectAll ${deizHaMiz} ${path} > tmp_dates.txt
+
+	results=$(wc -l tmp_dates.txt | cut -d ' ' -f 1)
+
+	if [[ ${results} -ge "1" ]]	#recherche non vide		CHERCHE SI ANNIVERSAIRE AJD
+	then
+		if [[ ${results} -eq "1" ]]
+		then
+			msg "${RED}Anniversaire aujourd'hui:${NOFORMAT}"
+			msg "${CYAN}"
+			${path}/calcAge
+			msg "${NOFORMAT}"
+			echo ""
+		else
+			msg "${RED}Anniversaires aujourd'hui:${NOFORMAT}"
+			msg "${CYAN}"
+			${path}/calcAge
+			msg "${NOFORMAT}"
+			echo ""
+		fi
+
+	else
+		msg "${ORANGE}Pas d'anniversaire aujourd'hui\n${NOFORMAT}"
+	fi
+
+	rm tmp_dates.txt	#ELIMINATION FICHIER TEMPORAIRE
+}
+
+#------------------------
+setup_colors
+title
+currentDay ${path}

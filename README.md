@@ -173,17 +173,17 @@ whoami
 Copier ce contenu dans le fichier créé **candleFinder**:
 ```
 # m h        user	command
-MINUTES HEURE * * * VOTRE_NOM_D_UTILISATEUR	CHEMIN_VERS_LE_FICHIER_LAUNCHER
+MINUTES HEURE * * * VOTRE_NOM_D_UTILISATEUR	CHEMIN/launcher CHEMIN
 ```
 - **MINUTES**: minutes auxquelles exécuter le script
 - **HEURE**: heure à laquelle exécuter le script
 - **NOM_D_UTILISATEUR**: le nom récupéré via la commande `whoami`
-- **CHEMIN_VERS_LE_FICHIER_dailyChecker**: chemin absolu vers le fichier dailyChecker. Copier-coller le chemin se trouvant dans le fichier **env** et y concatener `/dailyChecker`.
+- **CHEMIN**: chemin absolu vers le fichier *launcher*. Copier-coller le chemin se trouvant dans le fichier **env** et y concatener `/launcher`.
 
 Illustration:
 ```
 # m h        user	command
-05 11 * * * toto	/home/toto/dailyChecker
+05 11 * * * toto	/home/toto/launcher /home/toto/
 ```
 *Script cron qui lance l'application **CandleFinder** quotidiennement à 11h05*.
 

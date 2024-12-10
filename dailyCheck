@@ -2,7 +2,7 @@
 	#cherche les anniversaires du jour + permet de trouver la DDN de qqn de la liste.
 	#permet également d'ajouter des personnes à la liste d'anniversaire
 
-path=$(cat env)
+path=$1
 
 
 # Initialisation des couleurs

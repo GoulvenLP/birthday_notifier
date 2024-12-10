@@ -2,6 +2,10 @@
 # wrapper for the crontab
 # launchs the main script
 
+path=$1
+echo "PATH IS $path"
+echo "gives: ${path}/dailyCheck ${path}"
+
 export DISPLAY=:0
 export  XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.AEUSX2
-/usr/bin/gnome-terminal -- /bin/sh -c '/home/gou/Bureau/lab/anni/dailyCheck; bash'
+/usr/bin/gnome-terminal -- /bin/sh -c "${path}/dailyCheck ${path}; bash"
